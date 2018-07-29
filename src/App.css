@@ -1,16 +1,13 @@
+/* App styles */
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #690366;
+  height: 50px;
+  padding: 10px;
   color: white;
 }
 
@@ -18,11 +15,9 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
-}
+/* Map styles */
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.container {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
 }
