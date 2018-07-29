@@ -2,6 +2,8 @@
 
 .App {
   text-align: center;
+  box-sizing: border-box;
+  width: 100vw;
 }
 
 .App-header {
@@ -9,6 +11,7 @@
   height: 50px;
   padding: 10px;
   color: white;
+  width: 100%;
 }
 
 .App-title {
@@ -20,4 +23,13 @@
 .container {
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+}
+
+.map-container {
+    width: 70%;
+}
+
+.spots-filter {
+    width: 30%;
 }
