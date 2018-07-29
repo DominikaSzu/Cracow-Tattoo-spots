@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Map from './Map.js'
+import MapContainer from './MapContainer.js'
+
 
 class App extends Component {
   render() {
@@ -9,7 +10,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Cracow Tattoo Spots</h1>
         </header>
-        <Map />
+        <MapContainer />
       </div>
     );
   }
