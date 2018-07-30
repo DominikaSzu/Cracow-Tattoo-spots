@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  background-color: #690366;
+  background-color: #5d535e;
   height: 50px;
   padding: 10px;
   color: white;
@@ -27,9 +27,9 @@
 }
 
 .map-container {
-    width: 70%;
+    width: 100%;
 }
 
 .spots-filter {
-    width: 30%;
+    background-color: #bbc0cf;
 }

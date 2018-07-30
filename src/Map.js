@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
 class Map extends Component {
      state = {
@@ -13,7 +13,6 @@ class Map extends Component {
         ]
     }
     
-    
     render() {
         let locations = this.state.locations;
         const AppGoogleMap = withGoogleMap(props => (
@@ -24,8 +23,11 @@ class Map extends Component {
         {locations.map(location => 
         <Marker 
             position={location.location}
-            key={location.id}
-            />
+            key={location.id}>
+            <InfoWindow>
+            <p>Elo</p>
+            </InfoWindow>
+        </Marker>
             )}
       </GoogleMap>
    ));
