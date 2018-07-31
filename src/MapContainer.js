@@ -43,10 +43,21 @@ class MapContainer extends Component {
                     zoom: zoom
                 })
                 this.map = new maps.Map(node, mapConfig);
+                this.createMarkers();
             }
         }
     
-    
+    createMarkers() {
+        const {locations} = this.state;
+        const {google} = this.props;
+        locations.forEach((location) => {
+            let marker = new google.maps.Marker({
+                position: location.location,
+                map: this.map,
+                title: location.name
+            })
+        })
+    }
     
     render() {
         if(!this.props.loaded) {
