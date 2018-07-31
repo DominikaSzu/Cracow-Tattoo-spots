@@ -78,6 +78,10 @@ class MapContainer extends Component {
             infowindow.addListener('closeclick', function() {
                 infowindow.marker = null;        
             });
+            //when user clicks on map, infowindow closes
+            this.map.addListener('click', function() {
+                infowindow.close();
+            })
         }
     }
     
