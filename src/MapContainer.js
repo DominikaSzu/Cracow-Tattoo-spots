@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import { GoogleApiWrapper } from 'google-maps-react'
 
-export default class MapContainer extends Component {
+class MapContainer extends Component {
     
     componentDidUpdate(prevProps, prevState) {
             if (prevProps.google !== this.props.google) {
@@ -58,3 +59,7 @@ export default class MapContainer extends Component {
         );
     }
 }  
+
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0'
+})(MapContainer);
