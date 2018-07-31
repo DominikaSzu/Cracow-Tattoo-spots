@@ -23,7 +23,7 @@ export default class MapContainer extends Component {
                 const mapRef = this.refs.map;
                 const node = ReactDOM.findDOMNode(mapRef);
                 
-                let zoom = 13;
+                let zoom = 15;
                 let lat = 50.061599;
                 let lng = 19.937331;
                 const center = new maps.LatLng(lat, lng);
