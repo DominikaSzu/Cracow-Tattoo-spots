@@ -12,7 +12,8 @@ class MapContainer extends Component {
             {name: 'Retro Ink Tattoo', location: { lat: 50.062594, lng: 19.934261}, id: 3},
             {name: 'Kult Tattoo Fest', location: { lat: 50.062911, lng: 19.941253}, id: 4},
             {name: 'Hardcore Tattoo', location: { lat: 50.063879, lng: 19.937382}, id: 5}
-        ]
+        ],
+        markers: []
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -50,13 +51,34 @@ class MapContainer extends Component {
     createMarkers() {
         const {locations} = this.state;
         const {google} = this.props;
+        const {markers} = this.state;
         locations.forEach((location) => {
             let marker = new google.maps.Marker({
                 position: location.location,
                 map: this.map,
                 title: location.name
+            });
+            
+            markers.push(marker);
+            
+            let newInfoWindow = new google.maps.InfoWindow();
+            
+            marker.addListener('click', () => {
+                this.populateInfoWindow(marker, newInfoWindow);
             })
         })
+    };
+
+    populateInfoWindow = (marker, infowindow) => {
+        if (infowindow.marker !== marker) {
+            infowindow.marker = marker;
+            infowindow.setContent('<div>' + marker.title + '</div>');
+            infowindow.open(this.map, marker);
+            
+            infowindow.addListener('closeclick', function() {
+                infowindow.marker = null;        
+            });
+        }
     }
     
     render() {
