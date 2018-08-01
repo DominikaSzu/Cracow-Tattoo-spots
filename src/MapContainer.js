@@ -47,7 +47,7 @@ class MapContainer extends Component {
                 })
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
-                this.handleSearching();
+//                this.handleSearching();
             }
         }
     
@@ -73,7 +73,9 @@ class MapContainer extends Component {
     };
 
     populateInfoWindow = (marker, infowindow) => {
+        
         if (infowindow.marker !== marker) {
+            
             infowindow.marker = marker;
             infowindow.setContent('<div>' + marker.title + '</div>');
             infowindow.open(this.map, marker);
@@ -81,42 +83,52 @@ class MapContainer extends Component {
             infowindow.addListener('closeclick', function() {
                 infowindow.marker = null;        
             });
+            
             //when user clicks on map, infowindow closes
             this.map.addListener('click', function() {
                 infowindow.close();
             });
             
+            if (infowindow.marker.title == marker.title) {
+                //it will bounce bounce
+            }
+            
         }
     };
 
-    handleSearching = () => {
-        const {google} = this.props;
-        const {placeMarkers} = this.state;
-
-        const searchBox = new google.maps.places.SearchBox(
-            document.getElementById('input-space'));
-        searchBox.setBounds(this.map.getBounds());
-        
-        // Function fires when user selects a place from list
-        searchBox.addListener('places_changed', function() {
-           this.searchBoxPlace(this); 
-        });
-    
-        
-    }
+//    handleSearching = () => {
+//        const {google} = this.props;
+//        const {placeMarkers} = this.state;
+//
+//        const searchBox = new google.maps.places.SearchBox(
+//            document.getElementById('input-space'));
+//        searchBox.setBounds(this.map.getBounds());
+//        
+//        // Function fires when user selects a place from list
+//        searchBox.addListener('places_changed', function() {
+//           this.searchBoxPlace(this); 
+//        });
+//    
+//        
+//    }
     // Function to hide markers
-    hideMarkers = (markers) => {
-        for (let i=0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }
-    }
+//    hideMarkers = (markers) => {
+//        for (let i=0; i < markers.length; i++) {
+//            markers[i].setMap(null);
+//        }
+//    }
+//    
+//    searchBoxPlace = (searchBox) => {
+//            let places = searchBox.getPlace();
+//            
+//            if (places.length == 0) {
+//                window.alert('We are sorry, but there is no place matching your search!');
+//            }
+//    }
     
-    searchBoxPlace = (searchBox) => {
-            let places = searchBox.getPlaces();
-            
-            if (places.length == 0) {
-                window.alert('We are sorry, but there is no place matching your search!');
-            }
+    updateQuery = (event) => {
+        this.setState({ query: event.target.value });
+        console.log(this.state.query)
     }
     
     render() {
@@ -124,12 +136,13 @@ class MapContainer extends Component {
             return <div>Soon there will be a map... </div>
         }
 
+        let {query} = this.state;
         
         return(
         <div className="container">
             <div className="spots-filter">
             <p>Where you want to get a tattoo?</p>
-                <input className="input-space" id="input-space" placeholder="Wanna go to..."/>
+                <input type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul>
                 There will be a list of spots
                 </ul>
