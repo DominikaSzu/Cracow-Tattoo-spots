@@ -13,7 +13,8 @@ class MapContainer extends Component {
             {name: 'Kult Tattoo Fest', location: { lat: 50.062911, lng: 19.941253}, id: 4},
             {name: 'Hardcore Tattoo', location: { lat: 50.063879, lng: 19.937382}, id: 5}
         ],
-        markers: []
+        markers: [],
+        query: ''
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -45,6 +46,7 @@ class MapContainer extends Component {
                 })
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
+                this.handleSearching();
             }
         }
     
@@ -81,8 +83,17 @@ class MapContainer extends Component {
             //when user clicks on map, infowindow closes
             this.map.addListener('click', function() {
                 infowindow.close();
-            })
+            });
+            
         }
+    };
+
+    handleSearching = () => {
+        const {google} = this.props;
+        const inputAutocomplete = new google.maps.places.Autocomplete(
+        document.getElementById('input-space'));
+        
+        inputAutocomplete.bindTo('bounds', this.map);
     }
     
     render() {
@@ -94,7 +105,7 @@ class MapContainer extends Component {
         return(
         <div className="container">
             <div className="spots-filter">
-                <input />
+                <input className="input-space" id="input-space"/>
                 <ul>
                 There will be a list of spots
                 </ul>
@@ -108,5 +119,6 @@ class MapContainer extends Component {
 }  
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0'
+    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0',
+    libraries: ['places']
 })(MapContainer);

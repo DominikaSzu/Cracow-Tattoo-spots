@@ -34,10 +34,19 @@ body, html {
 }
 
 .spots-filter {
-    background-color: #bbc0cf;
+    background-color: #F7F7F7;
 }
 
 .map-container {
     height: 100vh;
     width: 80vw;
+}
+
+/* Filter styles */
+
+.input-space {
+    padding: 5px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 2px;
 }
