@@ -15,7 +15,7 @@ class MapContainer extends Component {
         ],
         markers: [],
         query: '',
-        placeMarkers: []
+//        placeMarkers: []
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -91,6 +91,8 @@ class MapContainer extends Component {
             
             if (infowindow.marker.title == marker.title) {
                 //it will bounce bounce
+                console.log(infowindow.marker.title)
+                console.log(marker.title)
             }
             
         }
@@ -128,7 +130,6 @@ class MapContainer extends Component {
     
     updateQuery = (event) => {
         this.setState({ query: event.target.value });
-        console.log(this.state.query)
     }
     
     render() {
@@ -136,7 +137,31 @@ class MapContainer extends Component {
             return <div>Soon there will be a map... </div>
         }
 
-        let {query} = this.state;
+        let {query, markers, locations} = this.state;
+        
+        if (query != '') {
+            
+            for (let i=0; i < markers.length; i++) {
+                markers[i].setVisible(false);
+            }
+            
+            locations.forEach((location) => {
+                if (location.name.toLowerCase().includes(query.toLowerCase())) {
+                    for (let i =0; i < markers.length; i++) {
+                        if (markers[i].title == location.name) {
+                            markers[i].setVisible(true)
+                        }
+                    }
+                }
+            })
+
+        } else {
+            for (let i=0; i < markers.length; i++) {
+                markers[i].setVisible(true);
+            }
+        }
+        
+        console.log(this.state.markers)
         
         return(
         <div className="container">
@@ -146,6 +171,9 @@ class MapContainer extends Component {
                 <ul>
                 There will be a list of spots
                 </ul>
+                <div className="info-place">
+                Place x fetch api infooo
+                </div>
             </div>
             <div className="map-container" ref="map">
                 Map will go here
