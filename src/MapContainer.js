@@ -14,7 +14,8 @@ class MapContainer extends Component {
             {name: 'Hardcore Tattoo', location: { lat: 50.063879, lng: 19.937382}, id: 5}
         ],
         markers: [],
-        query: ''
+        query: '',
+        placeMarkers: []
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -90,10 +91,32 @@ class MapContainer extends Component {
 
     handleSearching = () => {
         const {google} = this.props;
-        const inputAutocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('input-space'));
+        const {placeMarkers} = this.state;
+
+        const searchBox = new google.maps.places.SearchBox(
+            document.getElementById('input-space'));
+        searchBox.setBounds(this.map.getBounds());
         
-        inputAutocomplete.bindTo('bounds', this.map);
+        // Function fires when user selects a place from list
+        searchBox.addListener('places_changed', function() {
+           this.searchBoxPlace(this); 
+        });
+    
+        
+    }
+    // Function to hide markers
+    hideMarkers = (markers) => {
+        for (let i=0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
+    
+    searchBoxPlace = (searchBox) => {
+            let places = searchBox.getPlaces();
+            
+            if (places.length == 0) {
+                window.alert('We are sorry, but there is no place matching your search!');
+            }
     }
     
     render() {
@@ -105,7 +128,8 @@ class MapContainer extends Component {
         return(
         <div className="container">
             <div className="spots-filter">
-                <input className="input-space" id="input-space"/>
+            <p>Where you want to get a tattoo?</p>
+                <input className="input-space" id="input-space" placeholder="Wanna go to..."/>
                 <ul>
                 There will be a list of spots
                 </ul>
