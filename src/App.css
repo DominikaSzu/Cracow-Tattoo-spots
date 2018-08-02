@@ -50,3 +50,9 @@ body, html {
     width: 80%;
     border-radius: 2px;
 }
+
+.spot-list {
+    list-style-type: none;
+    text-align: left;
+    line-height: 1.5;
+}

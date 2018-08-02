@@ -15,7 +15,7 @@ class MapContainer extends Component {
         ],
         markers: [],
         query: '',
-//        placeMarkers: []
+        infowindow: new this.props.google.maps.InfoWindow()
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -47,35 +47,38 @@ class MapContainer extends Component {
                 })
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
-//                this.handleSearching();
             }
         }
     
     createMarkers() {
-        const {locations} = this.state;
+        const {locations, markers, infowindow} = this.state;
         const {google} = this.props;
-        const {markers} = this.state;
+        let defaultMarker = this.makeMarkerDefault();
+
         locations.forEach((location) => {
             let marker = new google.maps.Marker({
                 position: location.location,
                 map: this.map,
-                title: location.name
+                title: location.name,
+                icon: defaultMarker
             });
             
             markers.push(marker);
             
-            let newInfoWindow = new google.maps.InfoWindow();
-            
             marker.addListener('click', () => {
-                this.populateInfoWindow(marker, newInfoWindow);
+                this.populateInfoWindow(marker, infowindow);
             })
         })
     };
 
     populateInfoWindow = (marker, infowindow) => {
+           
+            let clickedMarker = this.makeMarkerClicked();
+            let defaultMarker = this.makeMarkerDefault();
         
         if (infowindow.marker !== marker) {
             
+            marker.setIcon(clickedMarker);
             infowindow.marker = marker;
             infowindow.setContent('<div>' + marker.title + '</div>');
             infowindow.open(this.map, marker);
@@ -87,6 +90,8 @@ class MapContainer extends Component {
             //when user clicks on map, infowindow closes
             this.map.addListener('click', function() {
                 infowindow.close();
+                infowindow.marker = null;
+                marker.setIcon(defaultMarker);
             });
             
             if (infowindow.marker.title == marker.title) {
@@ -97,37 +102,27 @@ class MapContainer extends Component {
             
         }
     };
-
-//    handleSearching = () => {
-//        const {google} = this.props;
-//        const {placeMarkers} = this.state;
-//
-//        const searchBox = new google.maps.places.SearchBox(
-//            document.getElementById('input-space'));
-//        searchBox.setBounds(this.map.getBounds());
-//        
-//        // Function fires when user selects a place from list
-//        searchBox.addListener('places_changed', function() {
-//           this.searchBoxPlace(this); 
-//        });
-//    
-//        
-//    }
-    // Function to hide markers
-//    hideMarkers = (markers) => {
-//        for (let i=0; i < markers.length; i++) {
-//            markers[i].setMap(null);
-//        }
-//    }
-//    
-//    searchBoxPlace = (searchBox) => {
-//            let places = searchBox.getPlace();
-//            
-//            if (places.length == 0) {
-//                window.alert('We are sorry, but there is no place matching your search!');
-//            }
-//    }
     
+    // Styles the marker with default style
+    
+    makeMarkerDefault = () => {
+            const {google} = this.props;
+        let markerImage = new google.maps.MarkerImage(
+            'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FA8FC0')
+        return markerImage;
+    }
+    
+    // Styles the marker when it's clicked
+    
+    makeMarkerClicked = () => {
+            const {google} = this.props;
+        let markerImage = new google.maps.MarkerImage(
+            'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FF0D81')
+        return markerImage;
+    }
+
+
+
     updateQuery = (event) => {
         this.setState({ query: event.target.value });
     }
@@ -139,7 +134,7 @@ class MapContainer extends Component {
 
         let {query, markers, locations} = this.state;
         
-        if (query != '') {
+        if (query !== '') {
             
             for (let i=0; i < markers.length; i++) {
                 markers[i].setVisible(false);
@@ -148,7 +143,7 @@ class MapContainer extends Component {
             locations.forEach((location) => {
                 if (location.name.toLowerCase().includes(query.toLowerCase())) {
                     for (let i =0; i < markers.length; i++) {
-                        if (markers[i].title == location.name) {
+                        if (markers[i].title === location.name) {
                             markers[i].setVisible(true)
                         }
                     }
@@ -161,15 +156,16 @@ class MapContainer extends Component {
             }
         }
         
-        console.log(this.state.markers)
-        
         return(
         <div className="container">
             <div className="spots-filter">
             <p>Where you want to get a tattoo?</p>
                 <input type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
-                <ul>
-                There will be a list of spots
+                <ul className="spot-list">
+                {
+                this.state.locations.map((location) => (
+                <li key={location.id}>{location.name}</li>
+                ))}
                 </ul>
                 <div className="info-place">
                 Place x fetch api infooo
@@ -183,3 +179,7 @@ class MapContainer extends Component {
     }
 }  
 
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0',
+    libraries: ['places']
+})(MapContainer);
