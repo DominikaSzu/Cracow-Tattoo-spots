@@ -47,6 +47,7 @@ class MapContainer extends Component {
                 })
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
+                this.listControl();
             }
         }
     
@@ -94,7 +95,7 @@ class MapContainer extends Component {
                 marker.setIcon(defaultMarker);
             });
             
-            if (infowindow.marker.title == marker.title) {
+            if (infowindow.marker.title === marker.title) {
                 //it will bounce bounce
                 console.log(infowindow.marker.title)
                 console.log(marker.title)
@@ -102,7 +103,7 @@ class MapContainer extends Component {
             
         }
     };
-    
+
     // Styles the marker with default style
     
     makeMarkerDefault = () => {
@@ -121,10 +122,150 @@ class MapContainer extends Component {
         return markerImage;
     }
 
-
-
+    // Function which updates the query with info inserted by user
     updateQuery = (event) => {
         this.setState({ query: event.target.value });
+    }
+    
+    // click on list element
+    
+    listControl = () => {
+        let {markers, infowindow, locations} = this.state;
+        let clickedMarker = this.makeMarkerClicked();
+        let defaultMarker = this.makeMarkerDefault();
+        
+        const element1 = document.querySelector('#element1');
+        console.log(element1);
+        const element2 = document.querySelector('#element2');
+        console.log(element2);
+        const element3 = document.querySelector('#element3');
+        console.log(element3);
+        const element4 = document.querySelector('#element4');
+        console.log(element4);
+        const element5 = document.querySelector('#element5');
+        console.log(element5);
+        
+        element1.addEventListener('click', function(){
+            markers.forEach((marker) => {
+                if (marker.title == element1.innerText) {
+                    marker.setIcon(clickedMarker);
+                    
+                    if (infowindow.marker !== marker) {
+            
+                    marker.setIcon(clickedMarker);
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(this.map, marker);
+
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;        
+                    });
+
+                }
+                    //jeszcze trza to wylaczyc
+                }
+                
+                element1.style.fontWeight = 'bold';
+            })
+        });    
+        
+        
+        element2.addEventListener('click', function(){
+            markers.forEach((marker) => {
+                if (marker.title == element2.innerText) {
+                    marker.setIcon(clickedMarker);
+                    
+                    if (infowindow.marker !== marker) {
+            
+                    marker.setIcon(clickedMarker);
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(this.map, marker);
+
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;        
+                    });
+
+                }
+                    //jeszcze trza to wylaczyc
+                }
+                
+                element2.style.fontWeight = 'bold';
+            })
+        });
+        
+        element3.addEventListener('click', function(){
+            markers.forEach((marker) => {
+                if (marker.title == element3.innerText) {
+                    marker.setIcon(clickedMarker);
+                    
+                    if (infowindow.marker !== marker) {
+            
+                    marker.setIcon(clickedMarker);
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(this.map, marker);
+
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;        
+                    });
+
+                }
+                    //jeszcze trza to wylaczyc
+                }
+                
+                element3.style.fontWeight = 'bold';
+            })
+        });
+        
+        element4.addEventListener('click', function(){
+            markers.forEach((marker) => {
+                if (marker.title == element4.innerText) {
+                    marker.setIcon(clickedMarker);
+                    
+                    if (infowindow.marker !== marker) {
+            
+                    marker.setIcon(clickedMarker);
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(this.map, marker);
+
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;        
+                    });
+
+                }
+                    //jeszcze trza to wylaczyc
+                }
+                
+                element4.style.fontWeight = 'bold';
+            })
+        });
+        
+        element5.addEventListener('click', function(){
+            markers.forEach((marker) => {
+                if (marker.title == element5.innerText) {
+                    marker.setIcon(clickedMarker);
+                    
+                    if (infowindow.marker !== marker) {
+            
+                    marker.setIcon(clickedMarker);
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(this.map, marker);
+
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;        
+                    });
+
+                }
+                    //jeszcze trza to wylaczyc
+                }
+                
+                element5.style.fontWeight = 'bold';
+            })
+        });
+
     }
     
     render() {
@@ -162,10 +303,11 @@ class MapContainer extends Component {
             <p>Where you want to get a tattoo?</p>
                 <input type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
-                {
-                this.state.locations.map((location) => (
-                <li key={location.id}>{location.name}</li>
-                ))}
+                <li id="element1">{locations[0].name}</li>
+                <li id="element2">{locations[1].name}</li>
+                <li id="element3">{locations[2].name}</li>
+                <li id="element4">{locations[3].name}</li>
+                <li id="element5">{locations[4].name}</li>
                 </ul>
                 <div className="info-place">
                 Place x fetch api infooo
