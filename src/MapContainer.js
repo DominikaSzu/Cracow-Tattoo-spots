@@ -278,6 +278,7 @@ class MapContainer extends Component {
         element1.addEventListener('click', function(){
             markers.forEach((marker) => {
                 if (marker.title == element1.innerText) {
+                    
                     marker.setIcon(clickedMarker);
                     
                     if (infowindow.marker !== marker) {
@@ -451,7 +452,3 @@ class MapContainer extends Component {
     }
 }  
 
-export default GoogleApiWrapper({
-    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0',
-    libraries: ['places']
-})(MapContainer);
