@@ -308,7 +308,7 @@ export default class MapContainer extends Component {
         <div className="container">
             <div className="spots-filter">
             <p>Where you want to get a tattoo?</p>
-                <input type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
+                <input role="search" type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
                 {markers.filter(marker => marker.getVisible()).map((marker, i) => (
                 <li key={i}>{marker.title}</li>
@@ -318,7 +318,7 @@ export default class MapContainer extends Component {
                 Place x fetch api infooo
                 </div>
             </div>
-            <div className="map-container" ref="map">
+            <div role="application" className="map-container" ref="map">
                 Map will go here
             </div>
         </div>
