@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import ReactDOM from 'react-dom';
-import { GoogleApiWrapper } from 'google-maps-react'
 
-class MapContainer extends Component {
+
+export default class MapContainer extends Component {
     
     state={
             locations: [
@@ -20,7 +19,7 @@ class MapContainer extends Component {
     
     componentDidUpdate(prevProps, prevState) {
             if (prevProps.google !== this.props.google) {
-                this.loadMap();
+                this.loadMap(); 
             }
         }
        
@@ -34,7 +33,7 @@ class MapContainer extends Component {
                 const {google} = this.props;
                 const maps = google.maps;
                 
-                                const styles = [
+                const styles = [
                     {
                         "featureType": "administrative",
                         "elementType": "labels.text.fill",
@@ -180,6 +179,31 @@ class MapContainer extends Component {
                 this.listControl();
             }
         }
+ 
+    
+    // click on list element
+    
+    listControl = () => {
+        let {markers, infowindow, locations} = this.state;
+        let clickedMarker = this.makeMarkerClicked();
+        let defaultMarker = this.makeMarkerDefault();
+        let that = this;
+        
+        let elements = document.querySelector('.spot-list');
+        
+        elements.addEventListener('click', function(event){
+            if(event.target && event.target.nodeName === 'LI') {
+                let num = markers.findIndex(mar=> mar.title.toLowerCase() === event.target.innerText.toLowerCase())
+                that.populateInfoWindow(markers[num], infowindow);
+            }
+        })
+        
+    };
+
+    // Function which updates the query with info inserted by user
+    updateQuery = (event) => {
+        this.setState({ query: event.target.value });
+    }
     
     createMarkers() {
         const {locations, markers, infowindow} = this.state;
@@ -194,7 +218,7 @@ class MapContainer extends Component {
                 icon: defaultMarker
             });
             
-            markers.push(marker);
+            markers.push(marker)
             
             marker.addListener('click', () => {
                 this.populateInfoWindow(marker, infowindow);
@@ -206,7 +230,7 @@ class MapContainer extends Component {
            
             let clickedMarker = this.makeMarkerClicked();
             let defaultMarker = this.makeMarkerDefault();
-        
+
         if (infowindow.marker !== marker) {
             
             marker.setIcon(clickedMarker);
@@ -224,16 +248,11 @@ class MapContainer extends Component {
                 infowindow.marker = null;
                 marker.setIcon(defaultMarker);
             });
-            
-            if (infowindow.marker.title === marker.title) {
-                //it will bounce bounce
-                console.log(infowindow.marker.title)
-                console.log(marker.title)
-            }
-            
-        }
-    };
 
+        }
+        
+    }
+    
     // Styles the marker with default style
     
     makeMarkerDefault = () => {
@@ -252,193 +271,48 @@ class MapContainer extends Component {
         return markerImage;
     }
 
-    // Function which updates the query with info inserted by user
-    updateQuery = (event) => {
-        this.setState({ query: event.target.value });
-    }
-    
-    // click on list element
-    
-    listControl = () => {
-        let {markers, infowindow, locations} = this.state;
-        let clickedMarker = this.makeMarkerClicked();
-        let defaultMarker = this.makeMarkerDefault();
-        
-        const element1 = document.querySelector('#element1');
-        console.log(element1);
-        const element2 = document.querySelector('#element2');
-        console.log(element2);
-        const element3 = document.querySelector('#element3');
-        console.log(element3);
-        const element4 = document.querySelector('#element4');
-        console.log(element4);
-        const element5 = document.querySelector('#element5');
-        console.log(element5);
-        
-        element1.addEventListener('click', function(){
-            markers.forEach((marker) => {
-                if (marker.title == element1.innerText) {
-                    
-                    marker.setIcon(clickedMarker);
-                    
-                    if (infowindow.marker !== marker) {
-            
-                    marker.setIcon(clickedMarker);
-                    infowindow.marker = marker;
-                    infowindow.setContent('<div>' + marker.title + '</div>');
-                    infowindow.open(this.map, marker);
-
-                    infowindow.addListener('closeclick', function() {
-                        infowindow.marker = null;        
-                    });
-
-                }
-                    //jeszcze trza to wylaczyc
-                }
-                
-                element1.style.fontWeight = 'bold';
-            })
-        });    
-        
-        
-        element2.addEventListener('click', function(){
-            markers.forEach((marker) => {
-                if (marker.title == element2.innerText) {
-                    marker.setIcon(clickedMarker);
-                    
-                    if (infowindow.marker !== marker) {
-            
-                    marker.setIcon(clickedMarker);
-                    infowindow.marker = marker;
-                    infowindow.setContent('<div>' + marker.title + '</div>');
-                    infowindow.open(this.map, marker);
-
-                    infowindow.addListener('closeclick', function() {
-                        infowindow.marker = null;        
-                    });
-
-                }
-                    //jeszcze trza to wylaczyc
-                }
-                
-                element2.style.fontWeight = 'bold';
-            })
-        });
-        
-        element3.addEventListener('click', function(){
-            markers.forEach((marker) => {
-                if (marker.title == element3.innerText) {
-                    marker.setIcon(clickedMarker);
-                    
-                    if (infowindow.marker !== marker) {
-            
-                    marker.setIcon(clickedMarker);
-                    infowindow.marker = marker;
-                    infowindow.setContent('<div>' + marker.title + '</div>');
-                    infowindow.open(this.map, marker);
-
-                    infowindow.addListener('closeclick', function() {
-                        infowindow.marker = null;        
-                    });
-
-                }
-                    //jeszcze trza to wylaczyc
-                }
-                
-                element3.style.fontWeight = 'bold';
-            })
-        });
-        
-        element4.addEventListener('click', function(){
-            markers.forEach((marker) => {
-                if (marker.title == element4.innerText) {
-                    marker.setIcon(clickedMarker);
-                    
-                    if (infowindow.marker !== marker) {
-            
-                    marker.setIcon(clickedMarker);
-                    infowindow.marker = marker;
-                    infowindow.setContent('<div>' + marker.title + '</div>');
-                    infowindow.open(this.map, marker);
-
-                    infowindow.addListener('closeclick', function() {
-                        infowindow.marker = null;        
-                    });
-
-                }
-                    //jeszcze trza to wylaczyc
-                }
-                
-                element4.style.fontWeight = 'bold';
-            })
-        });
-        
-        element5.addEventListener('click', function(){
-            markers.forEach((marker) => {
-                if (marker.title == element5.innerText) {
-                    marker.setIcon(clickedMarker);
-                    
-                    if (infowindow.marker !== marker) {
-            
-                    marker.setIcon(clickedMarker);
-                    infowindow.marker = marker;
-                    infowindow.setContent('<div>' + marker.title + '</div>');
-                    infowindow.open(this.map, marker);
-
-                    infowindow.addListener('closeclick', function() {
-                        infowindow.marker = null;        
-                    });
-
-                }
-                    //jeszcze trza to wylaczyc
-                }
-                
-                element5.style.fontWeight = 'bold';
-            })
-        });
-
-    }
     
     render() {
-        if(!this.props.loaded) {
-            return <div>Soon there will be a map... </div>
-        }
 
-        let {query, markers, locations} = this.state;
-        
+        let {query, markers, locations, infowindow} = this.state;
+        console.log(markers)
         if (query !== '') {
             
-            for (let i=0; i < markers.length; i++) {
-                markers[i].setVisible(false);
-            }
+//            for (let i=0; i < markers.length; i++) {
+//                markers[i].setVisible(false);
+//            }
             
-            locations.forEach((location) => {
+            locations.forEach((location, i) => {
                 if (location.name.toLowerCase().includes(query.toLowerCase())) {
-                    for (let i =0; i < markers.length; i++) {
-                        if (markers[i].title === location.name) {
-                            markers[i].setVisible(true)
-                        }
-                    }
+
+                    markers[i].setVisible(true);
+                } else { 
+                    
+                if (infowindow.marker === markers[i]) {
+                    infowindow.close();
+                }
+                markers[i].setVisible(false);
                 }
             })
 
         } else {
-            for (let i=0; i < markers.length; i++) {
-                markers[i].setVisible(true);
-            }
+                locations.forEach((location, i) => {
+                    if (markers.length && markers[i]) {
+                        markers[i].setVisible(true);
+                    }
+                })
         }
         
         return(
+            
         <div className="container">
             <div className="spots-filter">
             <p>Where you want to get a tattoo?</p>
                 <input type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
-                <li id="element1">{locations[0].name}</li>
-                <li id="element2">{locations[1].name}</li>
-                <li id="element3">{locations[2].name}</li>
-                <li id="element4">{locations[3].name}</li>
-                <li id="element5">{locations[4].name}</li>
+                {markers.filter(marker => marker.getVisible()).map((marker, i) => (
+                <li key={i}>{marker.title}</li>
+                ))}
                 </ul>
                 <div className="info-place">
                 Place x fetch api infooo
