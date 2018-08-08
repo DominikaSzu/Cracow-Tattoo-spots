@@ -15,7 +15,7 @@ export default class MapContainer extends Component {
         ],
         markers: [],
         query: '',
-        infowindow: new this.props.google.maps.InfoWindow()
+        infowindow: new this.props.google.maps.InfoWindow(),
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -216,9 +216,10 @@ export default class MapContainer extends Component {
                 position: location.location,
                 map: this.map,
                 title: location.name,
-                icon: defaultMarker
+                icon: defaultMarker,
+                venueID: location.venueID,
             });
-            
+
             markers.push(marker)
             
             marker.addListener('click', () => {
@@ -233,14 +234,28 @@ export default class MapContainer extends Component {
             let defaultMarker = this.makeMarkerDefault();
 
         if (infowindow.marker !== marker) {
-            
-            marker.setIcon(clickedMarker);
+                        
             infowindow.marker = marker;
+            let latInf = marker.position.lat();
+            let lngIng = marker.position.lng();           
+            
+           //fetching details from api
+            
+            let infoBox = document.createElement('div');
+            let infoPlace = document.querySelector('.info-place');
+            infoPlace.innerHTML= '';
+            let foursquareInfo = <Foursquare venueID={marker.venueID} latInf={latInf} lngInf={lngIng} markerTitle={marker.title} />;
+            ReactDOM.render(foursquareInfo, infoBox);
+            marker.setIcon(clickedMarker);
+            
+            infoPlace.appendChild(infoBox);
             infowindow.setContent('<div>' + marker.title + '</div>');
+            
             infowindow.open(this.map, marker);
             
             infowindow.addListener('closeclick', function() {
-                infowindow.marker = null;        
+                infowindow.marker = null;
+                infoPlace.innerHTML = '';
             });
             
             //when user clicks on map, infowindow closes
@@ -248,12 +263,11 @@ export default class MapContainer extends Component {
                 infowindow.close();
                 infowindow.marker = null;
                 marker.setIcon(defaultMarker);
+                infoPlace.innerHTML= '';
             });
-            
-            //fetching details from api
-            let infoBox = document.querySelector('.info-place');
-            console.log(infoBox)
 
+        } else {
+            marker.setIcon(defaultMarker);
         }
         
     }
@@ -280,12 +294,8 @@ export default class MapContainer extends Component {
     render() {
 
         let {query, markers, locations, infowindow} = this.state;
-        console.log(markers)
+
         if (query !== '') {
-            
-//            for (let i=0; i < markers.length; i++) {
-//                markers[i].setVisible(false);
-//            }
             
             locations.forEach((location, i) => {
                 if (location.name.toLowerCase().includes(query.toLowerCase())) {
@@ -320,7 +330,6 @@ export default class MapContainer extends Component {
                 ))}
                 </ul>
                 <div className="info-place">
-                    <Foursquare />
                 </div>
             </div>
             <div role="application" className="map-container" ref="map">
