@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Foursquare from './Foursquare.js'
 
 
 export default class MapContainer extends Component {
     
     state={
             locations: [
-            {name: 'Pimiento', location: { lat: 50.059784, lng: 19.938652}, id: 1},
-            {name: 'La Grande Mamma', location: { lat: 50.061245, lng: 19.935592}, id: 2},
-            {name: 'Farina', location: { lat: 50.063931, lng: 19.939795}, id: 3},
-            {name: 'Moo Moo Steak & Burger Club', location: { lat: 50.062208, lng: 19.942640}, id: 4},
-            {name: 'Del Papa Ristorante', location: { lat: 50.063918, lng: 19.936661}, id: 5}
+            {name: 'Pimiento', location: { lat: 50.059784, lng: 19.938652}, id: 1, venueID: '4cc884e241e75481702a5784'},
+            {name: 'La Grande Mamma', location: { lat: 50.061245, lng: 19.935592}, id: 2, venueID: '53edf52a498e8d4bb322446f'},
+            {name: 'Farina', location: { lat: 50.063931, lng: 19.939795}, id: 3, venueID: '4dc6ad07887717c88041ae1e'},
+            {name: 'Moo Moo Steak & Burger Club', location: { lat: 50.062208, lng: 19.942640}, id: 4, venueID: '5a8b1ac97247501bc1266044'},
+            {name: 'Del Papa Ristorante', location: { lat: 50.063918, lng: 19.936661}, id: 5, venueID: '4d7396c127ddb60c3925de1b'}
         ],
         markers: [],
         query: '',
@@ -248,6 +249,10 @@ export default class MapContainer extends Component {
                 infowindow.marker = null;
                 marker.setIcon(defaultMarker);
             });
+            
+            //fetching details from api
+            let infoBox = document.querySelector('.info-place');
+            console.log(infoBox)
 
         }
         
@@ -307,7 +312,7 @@ export default class MapContainer extends Component {
             
         <div className="container">
             <div className="spots-filter">
-            <p>Where you want to get a tattoo?</p>
+            <p>Where you want eat?</p>
                 <input role="search" type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
                 {markers.filter(marker => marker.getVisible()).map((marker, i) => (
@@ -315,7 +320,7 @@ export default class MapContainer extends Component {
                 ))}
                 </ul>
                 <div className="info-place">
-                Place x fetch api infooo
+                    <Foursquare />
                 </div>
             </div>
             <div role="application" className="map-container" ref="map">
