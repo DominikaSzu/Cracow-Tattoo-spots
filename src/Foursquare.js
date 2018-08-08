@@ -6,6 +6,7 @@ let foursquare = require('react-foursquare')({
     clientSecret: 'Y1KJKAYQ3F3VIWJS12KYCBCKYL4SPSYBBPQCW5UUSSV35ME4'
 }); 
 
+// Fetching data from Foursquare API
 
 class Foursquare extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Foursquare extends Component {
                 this.setState({
                     info: res.response.venues[0].location.address });
             
-            }).catch(error => alert(error));        
+            }).catch(error => alert('Sorry, there is an error' + error));        
         }
 
 render() {
