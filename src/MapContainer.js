@@ -221,6 +221,7 @@ export default class MapContainer extends Component {
             markers.push(marker)
             
             marker.addListener('click', () => {
+                markers.forEach(marker => marker.setIcon(defaultMarker));
                 this.populateInfoWindow(marker, infowindow);
             })
         })
@@ -230,8 +231,9 @@ export default class MapContainer extends Component {
            
             let clickedMarker = this.makeMarkerClicked();
             let defaultMarker = this.makeMarkerDefault();
-
+            
         if (infowindow.marker !== marker) {
+            
             infowindow.marker = null;            
             infowindow.marker = marker;
             let latInf = marker.position.lat();
@@ -245,12 +247,13 @@ export default class MapContainer extends Component {
             infoPlace.innerHTML= '';
             let foursquareInfo = <Foursquare venueID={marker.venueID} latInf={latInf} lngInf={lngIng} markerTitle={marker.title} />;
             ReactDOM.render(foursquareInfo, infoBox);
-            marker.setIcon(clickedMarker);
             
             infoPlace.appendChild(infoBox);
             infowindow.setContent('<div>' + marker.title + '</div>');
             
             infowindow.open(this.map, marker);
+            
+            marker.setIcon(clickedMarker);
             
             infowindow.addListener('closeclick', function() {
                 marker.setIcon(defaultMarker);
