@@ -15,7 +15,7 @@ export default class MapContainer extends Component {
         ],
         markers: [],
         query: '',
-        infowindow: new this.props.google.maps.InfoWindow(),
+        infowindow: new this.props.google.maps.InfoWindow()
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -185,9 +185,7 @@ export default class MapContainer extends Component {
     // click on list element
     
     listControl = () => {
-        let {markers, infowindow, locations} = this.state;
-        let clickedMarker = this.makeMarkerClicked();
-        let defaultMarker = this.makeMarkerDefault();
+        let {markers, infowindow} = this.state;
         let that = this;
         
         let elements = document.querySelector('.spot-list');
@@ -234,10 +232,11 @@ export default class MapContainer extends Component {
             let defaultMarker = this.makeMarkerDefault();
 
         if (infowindow.marker !== marker) {
-                        
+            infowindow.marker = null;            
             infowindow.marker = marker;
             let latInf = marker.position.lat();
             let lngIng = marker.position.lng();           
+            
             
            //fetching details from api
             
@@ -254,6 +253,7 @@ export default class MapContainer extends Component {
             infowindow.open(this.map, marker);
             
             infowindow.addListener('closeclick', function() {
+                marker.setIcon(defaultMarker);
                 infowindow.marker = null;
                 infoPlace.innerHTML = '';
             });
