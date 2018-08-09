@@ -18,3 +18,8 @@ class App extends Component {
   }
 }
 
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCWSOC0yBETlxi2CaHga4MonDI1tm48PJ0',
+    libraries: ['places']
+})(App);
+
