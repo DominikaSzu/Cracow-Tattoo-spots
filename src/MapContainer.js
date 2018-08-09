@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Foursquare from './Foursquare.js'
+import Foursquare from './Foursquare.js';
+import logo from './logo.png';
+import './App.css';
 
 
 export default class MapContainer extends Component {
@@ -325,15 +327,16 @@ export default class MapContainer extends Component {
             
         <div className="container">
             <div className="spots-filter">
-            <p>Where you want eat?</p>
+            <p tabIndex='0'>Where you want eat?</p>
                 <input role="search" type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
                 {markers.filter(marker => marker.getVisible()).map((marker, i) => (
-                <li key={i}>{marker.title}</li>
+                <li key={i} tabIndex='0'>{marker.title}</li>
                 ))}
                 </ul>
-                <div className="info-place">
+                <div className="info-place" tabIndex='0'>
                 </div>
+                <img src={logo} alt='Logo' width='50px' />
             </div>
             <div role="application" className="map-container" ref="map">
                 Map will go here

@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Cracow Yummy Spots</h1>
+          <h1 className="App-title" tabIndex='0'>Cracow Yummy Spots</h1>
         </header>
         <MapContainer google={this.props.google} />
       </div>
