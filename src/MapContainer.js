@@ -23,18 +23,22 @@ export default class MapContainer extends Component {
     componentDidUpdate(prevProps, prevState) {
             if (prevProps.google !== this.props.google) {
                 this.loadMap(); 
-            }
+            } 
         }
        
     componentDidMount() {
         this.loadMap();
     }
-    
+
         loadMap() {
             if (this.props && this.props.google) {
                 //control if the google api is available                
                 const {google} = this.props;
                 const maps = google.maps;
+                
+                maps.onerror = function (message) {
+                    window.alert('There is a following error: ' + message)
+                }
                 
                 const styles = [
                     {
@@ -180,6 +184,8 @@ export default class MapContainer extends Component {
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
                 this.listControl();
+            } else {
+                window.alert('There is some problem with Google API, please try to reload the pages')
             }
         }
  
@@ -189,10 +195,12 @@ export default class MapContainer extends Component {
     listControl = () => {
         let {markers, infowindow} = this.state;
         let that = this;
+        let defaultMarker = this.makeMarkerDefault();
         
         let elements = document.querySelector('.spot-list');
         
         elements.addEventListener('click', function(event){
+            markers.forEach(marker => marker.setIcon(defaultMarker));
             if(event.target && event.target.nodeName === 'LI') {
                 let num = markers.findIndex(mar=> mar.title.toLowerCase() === event.target.innerText.toLowerCase())
                 that.populateInfoWindow(markers[num], infowindow);
