@@ -235,6 +235,10 @@ export default class MapContainer extends Component {
                 this.populateInfoWindow(marker, infowindow);
             })
         })
+        
+        this.setState({ 
+            markers: markers
+        })
     };
 
     populateInfoWindow = (marker, infowindow) => {
