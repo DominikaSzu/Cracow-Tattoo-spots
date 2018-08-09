@@ -9,9 +9,8 @@ let foursquare = require('react-foursquare')({
 // Fetching data from Foursquare API
 
 class Foursquare extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+
+    state = {
             info: null,
             venueID: { 'venue_id': this.props.venueID },
             params: {
@@ -19,7 +18,6 @@ class Foursquare extends Component {
             'query': this.props.markerTitle
             }
         };
-    }
     
     componentDidMount() {
         
@@ -28,13 +26,13 @@ class Foursquare extends Component {
                 this.setState({
                     info: res.response.venues[0].location.address });
             
-            }).catch(error => alert('Sorry, there is an error' + error));        
+            }).catch(error => alert('Sorry, there is some problem with Foursquare API, try to reload the page'));        
         }
 
 render() {
-
+    let addressInfo;
     if (this.state.info !== null) {
-        let addressInfo = this.state.info
+        addressInfo = this.state.info
         
     return(
     <p>
@@ -42,7 +40,7 @@ render() {
     </p>
     )
     } else {
-        let addressInfo = null
+        addressInfo = null
         return 'Loading is on...'
     }
 }
