@@ -4,7 +4,6 @@ import Foursquare from './Foursquare.js';
 import logo from './logo.png';
 import './App.css';
 
-
 export default class MapContainer extends Component {
               
     state={

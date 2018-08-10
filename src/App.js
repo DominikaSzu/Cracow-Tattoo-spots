@@ -3,8 +3,6 @@ import './App.css';
 import MapContainer from './MapContainer.js';
 import { GoogleApiWrapper } from 'google-maps-react';
 
-
-
 class App extends Component {
   render() {
 
