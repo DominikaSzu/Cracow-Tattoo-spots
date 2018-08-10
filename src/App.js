@@ -4,9 +4,6 @@ import MapContainer from './MapContainer.js';
 import { GoogleApiWrapper } from 'google-maps-react';
 
 
-function gm_authFailure() {
-    window.alert('We are sorry, but there is a problem with Google maps API authentication.')
-}
 
 class App extends Component {
   render() {

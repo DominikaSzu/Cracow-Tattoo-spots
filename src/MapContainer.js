@@ -6,7 +6,7 @@ import './App.css';
 
 
 export default class MapContainer extends Component {
-    
+              
     state={
             locations: [
             {name: 'Pimiento', location: { lat: 50.059784, lng: 19.938652}, id: 1, venueID: '4cc884e241e75481702a5784'},
@@ -35,10 +35,6 @@ export default class MapContainer extends Component {
                 //control if the google api is available                
                 const {google} = this.props;
                 const maps = google.maps;
-                
-                maps.onerror = function (message) {
-                    window.alert('There is a following error: ' + message)
-                }
                 
                 const styles = [
                     {
@@ -184,11 +180,9 @@ export default class MapContainer extends Component {
                 this.map = new maps.Map(node, mapConfig);
                 this.createMarkers();
                 this.listControl();
-            } else {
-                window.alert('There is some problem with Google API, please try to reload the pages')
             }
         }
- 
+
     
     // click on list element
     
