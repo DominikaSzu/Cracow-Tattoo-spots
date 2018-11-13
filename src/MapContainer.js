@@ -37,135 +37,20 @@ export default class MapContainer extends Component {
                 
                 const styles = [
                     {
-                        "featureType": "administrative",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#444444"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            },
-                            {
-                                "weight": "3.44"
-                            },
-                            {
-                                "gamma": "1.12"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "labels",
-                        "stylers": [
-                            {
-                                "visibility": "simplified"
-                            },
-                            {
-                                "color": "#c36990"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.province",
+                        "featureType": "all",
                         "elementType": "all",
                         "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.locality",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "color": "#eca9c6"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "saturation": -100
-                            },
-                            {
-                                "lightness": 45
-                            },
-                            {
-                                "color": "#ce96ae"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.highway",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "transit",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            },
                             {
                                 "visibility": "on"
+                            },
+                            {
+                                "hue": "#ffaa00"
                             }
                         ]
                     }
                 ];
                 
                 const mapRef = this.refs.map;
-                const node = ReactDOM.findDOMNode(mapRef);
                 
                 let zoom = 14;
                 let lat = 50.061599;
@@ -176,7 +61,7 @@ export default class MapContainer extends Component {
                     zoom: zoom,
                     styles: styles
                 })
-                this.map = new maps.Map(node, mapConfig);
+                this.map = new maps.Map(mapRef, mapConfig);
                 this.createMarkers();
                 this.listControl();
             }
@@ -205,9 +90,9 @@ export default class MapContainer extends Component {
     // Function which updates the query with info inserted by user
     updateQuery = (event) => {
         this.setState({ query: event.target.value });
-    }
+    };
     
-    createMarkers() {
+    createMarkers = () => {
         const {locations, markers, infowindow} = this.state;
         const {google} = this.props;
         let defaultMarker = this.makeMarkerDefault();
@@ -221,7 +106,7 @@ export default class MapContainer extends Component {
                 venueID: location.venueID,
             });
 
-            markers.push(marker)
+            markers.push(marker);
             
             marker.addListener('click', () => {
                 markers.forEach(marker => marker.setIcon(defaultMarker));
@@ -229,9 +114,7 @@ export default class MapContainer extends Component {
             })
         })
         
-        this.setState({ 
-            markers: markers
-        })
+        this.setState({ markers });
     };
 
     populateInfoWindow = (marker, infowindow) => {
@@ -262,14 +145,14 @@ export default class MapContainer extends Component {
             
             marker.setIcon(clickedMarker);
             
-            infowindow.addListener('closeclick', function() {
+            infowindow.addListener('closeclick', () => {
                 marker.setIcon(defaultMarker);
                 infowindow.marker = null;
                 infoPlace.innerHTML = '';
             });
             
             //when user clicks on map, infowindow closes
-            this.map.addListener('click', function() {
+            this.map.addListener('click', () => {
                 infowindow.close();
                 infowindow.marker = null;
                 marker.setIcon(defaultMarker);
@@ -286,17 +169,19 @@ export default class MapContainer extends Component {
     
     makeMarkerDefault = () => {
             const {google} = this.props;
-        let markerImage = new google.maps.MarkerImage(
+            let markerImage = new google.maps.MarkerImage(
             'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FA8FC0')
+        
         return markerImage;
     }
     
     // Styles the marker when it's clicked
     
     makeMarkerClicked = () => {
-            const {google} = this.props;
+        const {google} = this.props;
         let markerImage = new google.maps.MarkerImage(
             'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FF0D81')
+        
         return markerImage;
     }
 
@@ -309,10 +194,8 @@ export default class MapContainer extends Component {
             
             locations.forEach((location, i) => {
                 if (location.name.toLowerCase().includes(query.toLowerCase())) {
-
                     markers[i].setVisible(true);
-                } else { 
-                    
+                } else {      
                 if (infowindow.marker === markers[i]) {
                     infowindow.close();
                 }
@@ -335,13 +218,13 @@ export default class MapContainer extends Component {
             <p tabIndex='0'>Where you want eat?</p>
                 <input role="search" type="text" className="input-space" id="input-space" placeholder="Wanna go to..." value={this.state.query} onChange={this.updateQuery} />
                 <ul className="spot-list">
-                {markers.filter(marker => marker.getVisible()).map((marker, i) => (
-                <li key={i} tabIndex='0'>{marker.title}</li>
-                ))}
+                    {markers.filter(marker => marker.getVisible()).map((marker, i) => (
+                    <li key={i} tabIndex='0'>{marker.title}</li>
+                    ))}
                 </ul>
                 <div className="info-place" tabIndex='0'>
                 </div>
-                <img src={logo} alt='Logo' width='50px' />
+                <img src={logo} alt='Foursquare Logo' width='50px' />
             </div>
             <div role="application" className="map-container" ref="map">
                 Map will go here
