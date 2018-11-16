@@ -1,6 +1,6 @@
 # Cracow Yummy Spots
 
-This is the application that gives the viewer the best to have lunch or dinner.
+This is the application that shows the viewer the best places to have lunch or dinner.
 
 You are in the centre of the city. Here we are to help you!
 
@@ -26,10 +26,12 @@ To use the application you should:
 ## Code Dependencies
 
 This project was created thanks to the following code dependencies:
-* [Create React App](https://github.com/facebookincubator/create-react-app).
-* [Google Map React](https://github.com/fullstackreact/google-maps-react).
-* [React framework](https://github.com/facebook/react/).
-* [React-Dom package](https://github.com/facebook/react/tree/master/packages/react-dom).
-* [Foursquare API](https://developer.foursquare.com/).
-* [Map style](https://snazzymaps.com/style/237192/omaha).
-* [Google Maps](https://cloud.google.com/maps-platform/).
+* [Create React App](https://github.com/facebookincubator/create-react-app)
+* [Google Map React](https://github.com/fullstackreact/google-maps-react)
+* [React framework](https://github.com/facebook/react/)
+* [React-Dom package](https://github.com/facebook/react/tree/master/packages/react-dom)
+* [Foursquare API](https://developer.foursquare.com/)
+* [Map style](https://snazzymaps.com/style/237192/omaha)
+* [Google Maps](https://cloud.google.com/maps-platform/)
+* [Firebase Google](https://firebase.google.com/)
+* [Google Fonts](https://fonts.google.com/).
