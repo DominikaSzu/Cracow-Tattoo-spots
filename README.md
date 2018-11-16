@@ -1,14 +1,11 @@
 # Cracow Yummy Spots
 
-This is the application that shows the viewer the best places to have lunch or dinner.
+This application shows You the best places to have lunch or dinner.
 
-You are in the centre of the city. Here we are to help you!
+You are in the centre of the city? Here we are to help you!
 
-This application shows you 5 top restaurants in the city centre.
+You can find restaurants suggested by us, by clicking on a marker on the map.
 
-You can find them by clicking on a marker on the map.
-
-To make it easy to find them, you have to go to the restaurant.
 
 ## How to use it?
 

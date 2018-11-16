@@ -12,7 +12,16 @@ export default class MapContainer extends Component {
             {name: 'La Grande Mamma', location: { lat: 50.061245, lng: 19.935592}, id: 2, venueID: '53edf52a498e8d4bb322446f'},
             {name: 'Farina', location: { lat: 50.063931, lng: 19.939795}, id: 3, venueID: '4dc6ad07887717c88041ae1e'},
             {name: 'Moo Moo Steak & Burger Club', location: { lat: 50.062208, lng: 19.942640}, id: 4, venueID: '5a8b1ac97247501bc1266044'},
-            {name: 'Del Papa Ristorante', location: { lat: 50.063918, lng: 19.936661}, id: 5, venueID: '4d7396c127ddb60c3925de1b'}
+            {name: 'Mamma Mia', location: { lat: 50.064250, lng: 19.931850}, id: 7, venueID: '4bcf2575aeedef3b6b3bc598'},
+            {name: 'Klimaty Południa', location: { lat: 50.058750, lng: 19.941250}, id: 9, venueID: '4d28c296068e8cfab7fac84c'},
+            {name: 'Nolio', location: { lat: 50.049370, lng: 19.942840}, id: 10, venueID: '5639c271cd1086837a2fea42'},
+            {name: 'Qrudo', location: { lat: 50.051130, lng: 19.947640}, id: 11, venueID: '566ab474498ed74375e0de52'},
+            {name: 'Amarylis', location: { lat: 50.054280, lng: 19.943180}, id: 12, venueID: '50d8684ee4b01e0c73d50566'},
+            {name: 'Smaki Roślinne', location: { lat: 50.058640, lng: 19.927790}, id: 13, venueID: '57caf2d2498e35d05a07ab4e'},
+            {name: 'Bococa', location: { lat: 50.069810, lng: 19.925910}, id: 14, venueID: '513f1709e4b0300e086b746a'},
+            {name: 'Veganic', location: { lat: 50.064610, lng: 19.927360}, id: 15, venueID: '5780ceab498ef49b1353286c'},
+            {name: 'Zielone Tarasy', location: { lat: 50.073930, lng: 19.935060}, id: 17, venueID: '4e4e6a37b61cf637a4e6201c'},
+            {name: 'Fabryka Pizzy', location: { lat: 50.067100, lng: 19.955540}, id: 18, venueID: '4c13787877cea59325d2ce60'}
         ],
         markers: [],
         query: '',
