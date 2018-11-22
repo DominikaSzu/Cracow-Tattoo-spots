@@ -233,7 +233,7 @@ export default class MapContainer extends Component {
                 </ul>
                 <div className="info-place" tabIndex='0'>
                 </div>
-                <img src={logo} alt='Foursquare Logo' width='50px' />
+                <a href="https://4sq.com/19O2pWG" target="_blank"><img src={logo} alt='Foursquare Logo' width='50px' /></a>
             </div>
             <div role="application" className="map-container" ref="map">
                 Map will go here
